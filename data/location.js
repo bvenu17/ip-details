@@ -1,4 +1,6 @@
 const axios = require('axios');
+var AWS = require('aws-sdk');
+
 
 const mongoCollections = require('../config/mongoCollections');
 const ipdetails = mongoCollections.ipdetails;
@@ -73,11 +75,43 @@ const getIpFromDateFilter = async (fromDate,toDate) => {
     return retArr;
 }
 
+const sendSMS = async (ipaddress,phonenumber) => {
+
+    console.log("Enter AWS");
+
+    const dets = await getIpData(ipaddress);
+
+    // Set region
+    AWS.config.update({region: 'ap-southeast-2',accessKeyId:'AKIAJWD63OBNYLLY6C5Q',secretAccessKey:'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'});
+    
+    // Create publish parameters
+    var params = {
+      Message: 'Country:' + dets.country + ' City:' + dets.city + ' Latitude:' + dets.lat + ' Longitude:' + dets.lon, /* required */
+      PhoneNumber: phonenumber,
+    };
+    
+    // Create promise and SNS service object
+    var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+    console.log("Enter AWS 2");
+
+    // Handle promise's fulfilled/rejected states
+    publishTextPromise.then(
+      function(data) {
+        console.log("MessageID is " + data.MessageId);
+      }).catch(
+        function(err) {
+        console.error(err, err.stack);
+      });
+
+      return true;
+}
+
 
 
 module.exports = {
     getIpData,
     addData,
     getAllIps,
-    getIpFromDateFilter
+    getIpFromDateFilter,
+    sendSMS
 }

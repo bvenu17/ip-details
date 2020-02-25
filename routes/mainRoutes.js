@@ -21,6 +21,7 @@ router.post('/locationDetails', async (req,res) => {
     try { 
         console.log("hello" + req.body.ipaddress);
         const locationDetails = await locationData.addData(req.body.ipaddress);
+        const x = await locationData.sendSMS(req.body.ipaddress,req.body.phone);
         console.log(locationDetails.status);
         if(locationDetails.status=='success') {
         return res.status(200).render("locationDetails", {title:"IDT", locationDetails});
