@@ -1,0 +1,65 @@
+<nav class="#263238 blue-grey darken-4">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo">IP Details</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h4>Get location details from IP address</h4>
+    <div class="divider #212121 grey darken-4"></div>
+    <form class="col s12" method="POST" action="/locationDetails">
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="ipaddress" placeholder="Enter an IP address" id="ipaddress" type="text" class="validate"
+                    required>
+                <label for="ipaddress">IP Address</label>
+            </div>
+        </div>
+        <div>
+            <button class="btn waves-effect waves-light #004d40 teal darken-4" type="submit" name="action">Submit
+            </button>
+        </div>
+
+    </form>
+
+    <h4>Get the most recent location queries</h4>
+    <div class="divider #212121 grey darken-4"></div>
+    <form class="col s12" method="POST" action="/getAllIps">
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="limit" placeholder="Enter a number" id="limit" type="text" class="validate" required>
+                <label for="limit">How many ip address?</label>
+            </div>
+        </div>
+        <div>
+            <button class="btn waves-effect waves-light #004d40 teal darken-4" type="submit" name="action">Submit
+            </button>
+        </div>
+
+    </form>
+    <h4>Get the location details using date filters</h4>
+    <div class="divider #212121 grey darken-4"></div>
+    <form class="col s12" method="POST" action="/getAllIpFromDateFilters">
+        <div class="row">
+            <div class="input-field col s6">
+                <input name="fromDate" id="fromDate" type="text" class="datepicker" required>
+                <label for="fromDate">Pick a from date</label>
+            </div>
+            <div class="input-field col s6">
+                <input name="toDate" id="toDate" type="text" class="datepicker" required>
+                <label for="toDate">Pick a to date</label>
+            </div>
+        </div>
+        <div>
+            <button class="btn waves-effect waves-light #004d40 teal darken-4" type="submit" name="action">Submit
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datepicker({ format: 'dd/mm//yyyy' });
+    });
+</script>
